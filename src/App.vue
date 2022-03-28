@@ -2,7 +2,7 @@
   <nav>
     <img src="./assets/logo.svg" alt="logo" />
     <div class="filter--search">
-      <input type="text" placeholder="Input City" v-model="search" />
+      <input type="text" placeholder="Input City with Uppercase fisrt" v-model="search" />
     </div>
   </nav>
   <div class="container">
