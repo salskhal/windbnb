@@ -2,43 +2,26 @@
   <nav>
     <img src="./assets/logo.svg" alt="logo">
     <div class="filter--search">
-      <input type="text" placeholder="Input City">
+      <input type="text" placeholder="Input City" v-model="search">
     </div>
   </nav>
   <div class="container">
     <div class="header">
       <h2>Stays in Finland</h2>
-      <p>12+ stays</p>
+      <p>{{mathcingCities.length}} stays</p>
     </div>
-    <div class="stays-grid">
-      <div class="stay-card">
-        <img src="https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2255&q=80" alt="">
+    <!-- stays grid -->
+    <div class="stays-grid" >
+      <!-- each stay element -->
+      <div class="stay-card" v-for="stay in mathcingCities" :key="stay.title">
+        <img :src="stay.photo" alt="">
         <div class="descriptions">
           <div class="type-rating">
-            <p>Entire Apartment</p>
-            <p class="rating">⭐ 4.40</p>
+            <p>{{stay.type}}</p>
+            <p class="rating">⭐ {{stay.rating}}</p>
           </div>
-          <h5>Lovely Studio near Railway Station</h5>
-        </div>
-      </div>
-      <div class="stay-card">
-        <img src="https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2255&q=80" alt="">
-        <div class="descriptions">
-          <div class="type-rating">
-            <p>Entire Apartment</p>
-            <p class="rating">⭐ 4.40</p>
-          </div>
-          <h5>Lovely Studio near Railway Station</h5>
-        </div>
-      </div>
-      <div class="stay-card">
-        <img src="https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2255&q=80" alt="">
-        <div class="descriptions">
-          <div class="type-rating">
-            <p>Entire Apartment</p>
-            <p class="rating">⭐ 4.40</p>
-          </div>
-          <h5>Lovely Studio near Railway Station</h5>
+          <h5>{{stay.title}}</h5>
+          <p>{{stay.city}}</p>
         </div>
       </div>
     </div>
@@ -46,8 +29,23 @@
 </template>
 
 <script>
+
+import data from "./data/stays.json";
+
+
 export default {
   name: "App",
+  data(){
+    return{
+      stays: data,
+      search: ""
+    }
+  }, 
+  computed: {
+     mathcingCities() {
+      return this.stays.filter((stay) => stay.city.includes(this.search));
+    },
+  }
 };
 </script>
 
@@ -58,6 +56,10 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body{
+  background: rgb(247, 243, 243);
 }
 
 nav{
@@ -75,6 +77,7 @@ nav{
 .filter--search input{
   border: none;
   outline: none;
+  background: none;
 }
 .filter--search input:active{
   outline: none;
@@ -105,6 +108,7 @@ nav{
 
 .stays-grid img{
   width: 100%;
+  height: 300px;
   border-radius: 24px;
 }
 
