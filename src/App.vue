@@ -2,7 +2,7 @@
   <nav>
     <img src="./assets/logo.svg" alt="logo" />
     <div class="filter--search">
-      <input type="text" placeholder="Input City with Uppercase fisrt" v-model="search" />
+      <input type="text" placeholder="Input City" v-model="search" />
     </div>
   </nav>
   <div class="container">
@@ -41,7 +41,21 @@ export default {
   },
   computed: {
     mathcingCities() {
-      return this.stays.filter((stay) => stay.city.includes(this.search));
+      // return this.stays.filter((stay) => stay.city.includes(this.search));
+      
+      const { search, stays } = this
+      const query = search.toLowerCase()
+      if(search === '') return stays
+
+      // return stays.filter(stay => {
+      //   return Object.values(stay).some(word => String(word).toLowerCase().includes(query))
+      // } )
+       return stays.filter(stay => {
+        return stay.city.toLowerCase().includes(query)
+      } )
+
+      // arr.filter LOOP {} => ['hel', 'country'].some (word)
+
     },
   },
 };
